@@ -1,0 +1,60 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', '-g', 'mocha' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.35
+4 verbose cache add [ 'mocha', null ]
+5 verbose cache add name=undefined spec="mocha" args=["mocha",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'mocha',
+6 verbose parsed url   path: 'mocha',
+6 verbose parsed url   href: 'mocha' }
+7 silly lockFile a619da43-mocha mocha
+8 verbose lock mocha /root/.npm/a619da43-mocha.lock
+9 silly lockFile a619da43-mocha mocha
+10 silly lockFile a619da43-mocha mocha
+11 verbose addNamed [ 'mocha', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile b9899f31-mocha mocha@
+14 verbose lock mocha@ /root/.npm/b9899f31-mocha.lock
+15 silly addNameRange { name: 'mocha', range: '*', hasData: false }
+16 verbose request where is /mocha
+17 verbose request registry http://registry.npmjs.org/
+18 verbose request id b3355efa6a02fd43
+19 verbose url raw /mocha
+20 verbose url resolving [ 'http://registry.npmjs.org/', './mocha' ]
+21 verbose url resolved http://registry.npmjs.org/mocha
+22 verbose request where is http://registry.npmjs.org/mocha
+23 info trying registry request attempt 1 at 16:46:11
+24 http GET http://registry.npmjs.org/mocha
+25 info retry will retry, error on last attempt: Error: getaddrinfo ENOTFOUND
+26 info trying registry request attempt 2 at 16:46:23
+27 http GET http://registry.npmjs.org/mocha
+28 info retry will retry, error on last attempt: Error: getaddrinfo ENOTFOUND
+29 info trying registry request attempt 3 at 16:47:23
+30 http GET http://registry.npmjs.org/mocha
+31 silly lockFile b9899f31-mocha mocha@
+32 silly lockFile b9899f31-mocha mocha@
+33 error network getaddrinfo ENOTFOUND
+33 error network This is most likely not a problem with npm itself
+33 error network and is related to network connectivity.
+33 error network In most cases you are behind a proxy or have bad network settings.
+33 error network
+33 error network If you are behind a proxy, please make sure that the
+33 error network 'proxy' config is set properly.  See: 'npm help config'
+34 error System Linux 2.6.39-400.215.2.el6uek.x86_64
+35 error command "/usr/bin/node" "/usr/bin/npm" "install" "-g" "mocha"
+36 error cwd /predix/unitTest
+37 error node -v v0.10.35
+38 error npm -v 1.4.28
+39 error syscall getaddrinfo
+40 error code ENOTFOUND
+41 error errno ENOTFOUND
+42 verbose exit [ 1, true ]
