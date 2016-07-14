@@ -1,9 +1,8 @@
 echo "Creating Mongo service"
-
+​
 cd ..
 runPath="$PWD"
-
-
+​
 echo '[Unit]' > /etc/systemd/system/mongoServer.service
 echo 'Description=Start Mongo in the background' >> /etc/systemd/system/mongoServer.service
 echo 'After=network.target mongoStart.service' >> /etc/systemd/system/mongoServer.service
@@ -15,11 +14,11 @@ echo 'RestartSec=10' >> /etc/systemd/system/mongoServer.service
 echo '' >> /etc/systemd/system/mongoServer.service
 echo '[Install]' >> /etc/systemd/system/mongoServer.service
 echo 'WantedBy=multi-user.target' >> /etc/systemd/system/mongoServer.service
-
+​
 echo "Enabling new service"
-sudo systemctl daemon-reload
-sudo systemctl start mongoServer
-
-sudo systemctl enable mongoServer
-
+#sudo systemctl daemon-reload
+#sudo systemctl start mongoServer
+​
+#sudo systemctl enable mongoServer
+​
 echo "done"
