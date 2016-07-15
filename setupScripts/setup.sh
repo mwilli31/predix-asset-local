@@ -10,8 +10,9 @@ cd /predix
 cd predix-asset-local
 ​
 apt-get install sudo
-apt-get install mongodb
-sudo apt-get install nodejs-legacy
+apt-get -y install mongodb
+sudo apt-get -y install nodejs-legacy
+apt-get -y install npm
 npm install
 ​
 cd setupScripts/
