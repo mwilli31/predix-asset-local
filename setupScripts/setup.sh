@@ -14,9 +14,9 @@ sudo apt-get -y  install nodejs-legacy
 apt-get -y  install npm
 npm install
 ​
-cd setupScripts/
-./mongoSetup.sh
-./startMongo.sh
+#cd setupScripts/
+#./mongoSetup.sh
+#./startMongo.sh
 ​
 echo "done"
 ​
