@@ -53,6 +53,35 @@ console.log("HERE child_process: " + m);
                     // case where model needs to be updated
                     data.model = JSON.parse(body)[0].model;
                 }
+		 if(JSON.parse(body)[0].protocol !== undefined) {
+                    // case where model needs to be updated
+                    data.protocol = JSON.parse(body)[0].protocol;
+                }
+		 if(JSON.parse(body)[0].category !== undefined) {
+                    // case where model needs to be updated
+                    data.category = JSON.parse(body)[0].category;
+                }
+		 if(JSON.parse(body)[0].sensor !== undefined) {
+                    // case where model needs to be updated
+                    data.sensor = JSON.parse(body)[0].sensor;
+                }
+		 if(JSON.parse(body)[0].model !== undefined) {
+                    // case where model needs to be updated
+                    data.oem = JSON.parse(body)[0].oem;
+                }
+		 if(JSON.parse(body)[0].manufacturer !== undefined) {
+                    // case where model needs to be updated
+                    data.manufacturer = JSON.parse(body)[0].manufacturer;
+                }
+		 if(JSON.parse(body)[0].kit !== undefined) {
+                    // case where model needs to be updated
+                    data.kit = JSON.parse(body)[0].kit;
+                }
+		 if(JSON.parse(body)[0].edgeAlias !== undefined) {
+                    // case where model needs to be updated
+                    data.edgeAlias = JSON.parse(body)[0].edgeAlias;
+                }
+
                 // save the data
                 data.save(function(err){
                     if(err) {
@@ -60,7 +89,7 @@ console.log("HERE child_process: " + m);
                     } else {
                         response = {"error" : false,"message" : "Data is updated for "+ JSON.parse(body)[0].uri};
                     }
-                    callback(200, response);
+                    //callback(200, response);
                 })
             }
         });

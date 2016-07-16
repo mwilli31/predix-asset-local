@@ -215,6 +215,29 @@ router.route("/uriTest")
         });
     })
 
+
+///
+router.route("/uriTest1")
+    .get(function(req,res){
+        var response = {};
+	console.log(req.query);
+        mongoOp.findOne({"uri":req.query.uri},function(err,data){
+        // This will run Mongo Query to fetch data based on ID.
+            if(err) {
+                response = {"error" : true,"message" : "Error fetching data"};
+            } else {
+		mongoOp.remove({"uri":req.query.uri},function(err,data){
+			 if(err) {
+                        response = {"error" : true,"message" : "Error deleting data"};
+                    } else {
+                        response = {"error" : true,"message" : "Data associated with "+req.params.id+"is deleted"};
+                    }
+                    res.json(response);
+                });
+            }
+          
+        });
+    })
 app.use('/',router);
 
 app.listen(3000);
