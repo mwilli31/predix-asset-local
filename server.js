@@ -5,6 +5,7 @@ var mongoOp     =   require("./model/asset");
 var bodyParser  =   require('body-parser');
 var router      =   express.Router();
 var request     =   require('request');
+var cp		=   require('child_process');
 
 ////
 var findUri = function(db, callback, uri) {
@@ -39,7 +40,8 @@ router.route("/uri")
             } else {
                 response = {"error" : false,"message" : data};
             }
-            res.json(response);
+            
+             res.json(response);
         });
     })
      .post(function(req,res){
@@ -71,19 +73,27 @@ router.route("/uri")
 		res.json({"error": false, "message" : "no data was added"});
 	}else{
       
-
+	console.log("BEFORE " + req.body.kit);
 	 db.uri = req.body.uri;
+	db.edgeAlias = req.body.edgeAlias;
+	db.kit = req.body.kit;
+	db.manufacturer = req.body.manufacturer;
+	db.oem = req.body.oem;
+	db.sensor = req.body.sensor;
+	db.category = req.body.category;
+	db.protocol = req.body.protocol;
 	 db.model = req.body.model;
-	console.log("email sent : " + req.body.uri + " was added");
+	console.log("email sent : " + req.body.uri + " was added "  + req.body.oem + " herer");
 //new//
 
-	var options = {
-       url: 'https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/engines/645',
-      headers: {
-    'Authorization': 'YXBwLWNsaWVudC1pZDpzZWNyZXQ=',
-	'Content-Type' : 'application/json'
-  }
-};
+	 var child = cp.fork('childTest');
+                console.log("child");
+            child.on('message',function(m){
+                console.log("got "+ m);
+        });
+        console.log("SEND");
+        child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io" + db.uri);
+
 
 // var outString = "";
 //  request.get(options).pipe(response);

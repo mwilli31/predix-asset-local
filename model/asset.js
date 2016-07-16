@@ -5,6 +5,13 @@ var mongoSchema =   mongoose.Schema;
 // create schema
 var userSchema  = {
     "uri" : String,
+    "edgeAlias" : String,
+    "kit" : String,
+    "manufacturer" : String,
+    "oem" : String,
+    "sensor" : String,
+    "category" : String,
+    "protocol" : String,
     "model" : String
 };
 // create model if not exists.
