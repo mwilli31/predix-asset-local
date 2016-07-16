@@ -46,8 +46,8 @@ console.log("HERE child_process: " + m);
 		//console.log("HWERERRE : "  + req.params.id);
                 if(JSON.parse(body)[0].uri !== undefined) {
                     // case where uri needs to be updated.
-                    data.uri = JSON.parse(body)[0].uri
-
+                    data.uri = data.uri +"-"+ data.id; 
+			
                 }
                 if(JSON.parse(body)[0].model !== undefined) {
                     // case where model needs to be updated
@@ -77,9 +77,9 @@ console.log("HERE child_process: " + m);
                     // case where model needs to be updated
                     data.kit = JSON.parse(body)[0].kit;
                 }
-		 if(JSON.parse(body)[0].edgeAlias !== undefined) {
+		 if(JSON.parse(body)[0]["edge-alias"] !== undefined) {
                     // case where model needs to be updated
-                    data.edgeAlias = JSON.parse(body)[0].edgeAlias;
+                    //data["edge-alias"] = JSON.parse(body)[0]["edge-alias"];
                 }
 
                 // save the data

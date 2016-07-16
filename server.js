@@ -75,7 +75,7 @@ router.route("/uri")
       
 	console.log("BEFORE " + req.body.kit);
 	 db.uri = req.body.uri;
-	db.edgeAlias = req.body.edgeAlias;
+	db["edge-alias"] = req.body["edge-alias"];
 	db.kit = req.body.kit;
 	db.manufacturer = req.body.manufacturer;
 	db.oem = req.body.oem;
@@ -86,14 +86,15 @@ router.route("/uri")
 	console.log("email sent : " + req.body.uri + " was added "  + req.body.oem + " herer");
 //new//
 
-	 var child = cp.fork('childTest');
+	 var child = cp.fork('/predix/predix-asset-local/childTest');
                 console.log("child");
             child.on('message',function(m){
                 console.log("got "+ m);
         });
         console.log("SEND");
         child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io" + db.uri);
-
+	//console.log("[DEBUG] = " +  db["edge-alias"].substr(0,db["edge-alias"].indexOf('-')));
+	//child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/tags/"+db["edge-alias"].substr(0,db["edge-alias"].indexOf('-'))+"-1/alias");
 
 // var outString = "";
 //  request.get(options).pipe(response);

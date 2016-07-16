@@ -5,7 +5,7 @@ var mongoSchema =   mongoose.Schema;
 // create schema
 var userSchema  = {
     "uri" : String,
-    "edgeAlias" : String,
+    "edge-alias" : String,
     "kit" : String,
     "manufacturer" : String,
     "oem" : String,
