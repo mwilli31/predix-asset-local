@@ -13,14 +13,15 @@ app.use(bodyParser.urlencoded({"extended" : false}));
 //child processes the request
 process.on('message', function(m,callback) {
   // Do work
-var partOne = m.substr(0,m.indexOf('^'));
+// parse initial parameter from server.js
+var partOne = m.substr(0,m.indexOf('^')); //this is the microservice url
 var partTwoTemp = m.substr(m.indexOf('^')+1);
-var partTwo = partTwoTemp.substr(0,partTwoTemp.indexOf('&'));
-var partThree = partTwoTemp.substr(partTwoTemp.indexOf('&')+1);
+var partTwo = partTwoTemp.substr(0,partTwoTemp.indexOf('&')); //this is the devices passed in the body
+var partThree = partTwoTemp.substr(partTwoTemp.indexOf('&')+1); //kits
 console.log("child was started " + partOne + " try: " + partTwo  + " hopw : " + partThree)
 var nameLength = partOne.length;
 var n = partOne.substring(0,partOne.indexOf('-')); 
-//m =  m.substring(0,nameLength-2);
+
  var options = {
  method: 'POST',
   url: partOne,
@@ -31,14 +32,11 @@ var n = partOne.substring(0,partOne.indexOf('-'));
   body: { devices: partTwo , kits: partThree },
   json: true };
 
-
+//post to microservice
 console.log("HERE child_process: " + m);
-  // console.log(JSON.stringify(options, null, 2));
 
   request(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      //self.model = JSON.parse(response.body);
-      //self.model  = JSON.stringify(self.modelA);
       console.log("[INFO] asset fetched " + body[0].uri ); 
      console.log("[info] here " + body[0].uri);
       //post to local
@@ -46,16 +44,14 @@ console.log("HERE child_process: " + m);
 		var db = new mongoOp();
         // first find out record exists or not
         // if it does then update the record
-	//console.log("foo " + "/sensors/" + partOne.substr(partOne.indexOf('G')));
         mongoOp.findOne({"uri": "/sensors/" + partOne.substr(partOne.indexOf('G'))},function(err,data){
             if(err) {
                 response = {"error" : true,"message" : "Error fetching data"};
             } else {
 		db = data;
-		console.log("ppp : " + data);
+		console.log("this is the data in the local db : " + data);
             // we got data from Mongo.
             // change it accordingly.
-		//console.log("HWERERRE : "  + req.params.id);
                 if(body[0].uri !== undefined) {
                     // case where uri needs to be updated.
                     var temp = body[0].uri.substr(body[0].uri.indexOf('G')); 
@@ -89,6 +85,9 @@ console.log("HERE child_process: " + m);
                     // case where model needs to be updated
                     //data.kits = body[0].kits;
                 }
+
+// edge-alias is passed through not modified
+
 		 //if(JSON.parse(body)[0]["edge-alias"] !== undefined) {
                     // case where model needs to be updated
 		//	 var temp = JSON.parse(body)[0].uri.substr(JSON.parse(body)[0].uri.indexOf('G'));
