@@ -7,20 +7,6 @@ var router      =   express.Router();
 var request     =   require('request');
 var cp		=   require('child_process');
 
-////
-var findUri = function(db, callback, uri) {
-   var cursor =db.collection('asseturis').find({"uri":uri} );
-   cursor.each(function(err, doc) {
-      assert.equal(err, null);
-      if (doc != null) {
-         console.dir(doc);
-      } else {
-         callback();
-      }
-   });
-};
-////
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({"extended" : false}));
@@ -90,8 +76,7 @@ router.route("/uri")
                 console.log("got "+ m);
         });
         console.log("SEND");
-//        child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/demo" + db.uri,db.devices);
-child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/demo" + req.body.uri +"^"+ req.body.devices+"&"+req.body.kits);
+	child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/demo" + req.body.uri +"^"+ req.body.devices+"&"+req.body.kits);
 	
         db.save(function(err){
         // save() will run insert() command of MongoDB.
@@ -110,6 +95,7 @@ child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/demo" + re
     });
 
 // other rest calls
+// gets asset by mongo id
 router.route("/uri/:id")
     .get(function(req,res){
         var response = {};
@@ -123,7 +109,7 @@ router.route("/uri/:id")
             res.json(response);
         });
     })
-
+//deletes based on uri (depricated)
     .delete(function(req,res){
         var response = {};
         // find the data
@@ -146,31 +132,24 @@ router.route("/uri/:id")
 })
 
 
-//added post
+//put to update asset based on uri
  .put(function(req,res){
         var response = {};
 	var db = new mongoOp();
-        // first find out record exists or not
-        // if it does then update the record
-	//console.log("foo");
         mongoOp.findOne({"uri":req.params.id},function(err,data){
             if(err) {
                 response = {"error" : true,"message" : "Error fetching data"};
             } else {
 		db = data;
-		console.log("ppp : " + data);
+		console.log("data found : " + data);
             // we got data from Mongo.
-            // change it accordingly.
-		//console.log("HWERERRE : "  + req.params.id);
+            // change it accordingly
                 if(req.body.uri !== undefined) {
-                    // case where email needs to be updated.
-		  //  console.log("bar : " + data.uri);
                     data.uri = req.body.uri;
-		    //console.log("foobar :  " + data.uri);
 
                 }
                 if(req.body.model !== undefined) {
-                    // case where password needs to be updated
+                    // case where model needs to be updated
                     data.model = req.body.model;
                 }
                 // save the data
@@ -187,7 +166,7 @@ router.route("/uri/:id")
     })
 
 
-//modified to work with edgealias
+//modified to work with edgealias so it can include backslashes
 router.route("/uriTest")
     .get(function(req,res){
         var response = {};
@@ -195,7 +174,7 @@ router.route("/uriTest")
        // mongoOp.findOne({"uri":req.query.uri},function(err,data){
         mongoOp.findOne({"edge-alias":req.query.uri},function(err,data){
 
-	// This will run Mongo Query to fetch data based on ID.
+	// This will run Mongo Query to fetch data based on URI.
             if(err) {
                 response = {"error" : true,"message" : "Error fetching data"};
             } else {
@@ -210,13 +189,13 @@ router.route("/uriTest")
     })
 
 
-///added delete by uri
+///added delete by uri (USE THIS DELETE)
 router.route("/uriTest1")
     .get(function(req,res){
         var response = {};
 	console.log(req.query);
         mongoOp.findOne({"uri":req.query.uri},function(err,data){
-        // This will run Mongo Query to fetch data based on ID.
+        // This will run Mongo Query to fetch data based on URI.
             if(err) {
                 response = {"error" : true,"message" : "Error fetching data"};
             } else {
