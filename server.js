@@ -44,16 +44,14 @@ router.route("/uri")
              res.json(response);
         });
     })
+//post to local asset and fire off workflow
      .post(function(req,res){
         var db = new mongoOp();
         var response = {};
-        // fetch email and password from REST request.
-        // Add strict validation when you use this in Production.
-
 	 var responseExist = 0;
-        //console.log(req.body);
+	//check to make sure that new asset is unique by using edge-alias
         mongoOp.findOne({"edge-alias":req.body["edge-alias"]},function(err,data){
-        // This will run Mongo Query to fetch data based on ID.
+        // This will run Mongo Query to fetch data based on edge-alias.
             if(err) {
                 responseExist = -1;
             } else {
@@ -67,13 +65,12 @@ router.route("/uri")
             }
            
         
-	//console.log("TEST " + responseExist);
 	if(responseExist > 0){
 		console.log("an asset with that uri is already in the db");
 		res.json({"error": false, "message" : "no data was added"});
 	}else{
-      
-	console.log("BEFORE " + req.body.kit);
+      //asset alias is unique
+	console.log("body " + req.body.kit);
 	 db.uri = req.body.uri;
 	db["edge-alias"] = req.body["edge-alias"];
 	db.kits = req.body.kits;
@@ -85,7 +82,7 @@ router.route("/uri")
 	 db.model = req.body.model;
         db.devices = req.body.devices;
 	console.log("email sent : " + req.body.uri + " was added "  + req.body.oem + " herer");
-//new//
+//new child process for assetMicroservice//
 
 	 var child = cp.fork('/predix/predix-asset-local/assetMicroservice');
                 console.log("child");
@@ -96,16 +93,6 @@ router.route("/uri")
 //        child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/demo" + db.uri,db.devices);
 child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/demo" + req.body.uri +"^"+ req.body.devices+"&"+req.body.kits);
 	
-
-//console.log("[DEBUG] = " +  db["edge-alias"].substr(0,db["edge-alias"].indexOf('-')));
-	//child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/tags/"+db["edge-alias"].substr(0,db["edge-alias"].indexOf('-'))+"-1/alias");
-
-// var outString = "";
-//  request.get(options).pipe(response);
-
-//console.log("here TEST: " + JSON.stringify(request.get(options))); 
-//
- 
         db.save(function(err){
         // save() will run insert() command of MongoDB.
         // it will add new data in collection.
@@ -122,7 +109,7 @@ child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/demo" + re
 	});
     });
 
-
+// other rest calls
 router.route("/uri/:id")
     .get(function(req,res){
         var response = {};

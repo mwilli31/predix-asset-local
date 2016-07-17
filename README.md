@@ -98,7 +98,8 @@ This API call first fetches more data about that specific type of sensor from an
 by assigning it in this form "/tags/Grove_Sensor*UUID". To verify that the UUID is globally unique their is an automatic API POST to
 the global Timeseries for the Kits. If it is a unique tag, then the microservice will update the original post to the Local DB, with the new info and UUID tag.
 
-Still to be implemented is, at the same time, the same tag will be posted to a global asset registry so data from timeseries can be visualized later
+The server.js rest client interacts with the assetMicroservice.js file as a child process to query the asset-rest-service microservice in predix
+
 
 --------------------------------------------------------------
 If there are any questions or issues you can email eli.goldweber@ge.com for clarification.
