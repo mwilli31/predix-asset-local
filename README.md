@@ -92,7 +92,7 @@ where 0000 is the process id.
 
 -------------------------------------------------------
 
-Here are the supported calls:
+HERE ARE THE SUPPORTED CALLS:
 
 	POST localhost:3000/uri
 	
