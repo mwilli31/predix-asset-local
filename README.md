@@ -42,6 +42,8 @@ start the REST client call:
 
 	npm start
 
+This REST client uses port 3000 
+
 ------------------------------------------------------
 
 --- starting the mongo service without systemD----
