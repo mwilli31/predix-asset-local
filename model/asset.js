@@ -15,5 +15,7 @@ var userSchema  = {
     "model" : String,
     "devices" : String
 };
+//this acts like a model for the assets being posted
+// also defines the mongoDB and sets up port for the mongo listener
 // create model if not exists.
 module.exports = mongoose.model('asseturis',userSchema);
