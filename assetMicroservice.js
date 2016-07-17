@@ -22,6 +22,13 @@ console.log("child was started " + partOne + " try: " + partTwo  + " hopw : " + 
 var nameLength = partOne.length;
 var n = partOne.substring(0,partOne.indexOf('-')); 
 
+//this child process takes as input a string like "https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/demo/sensors/aaaa^/devices/bbbb&/kits/cc
+//so those are the parts that are pasrsed off.
+//partOne is everything before the "^"
+//partTwo is the devices
+//partThree is the kits
+//n is part of the edge alias so if the sensor is "Grove-Sensor_1_1-7" then n is equal to 7
+
  var options = {
  method: 'POST',
   url: partOne,
@@ -33,12 +40,11 @@ var n = partOne.substring(0,partOne.indexOf('-'));
   json: true };
 
 //post to microservice
-console.log("HERE child_process: " + m);
+console.log("child_process has: " + m);
 
   request(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       console.log("[INFO] asset fetched " + body[0].uri ); 
-     console.log("[info] here " + body[0].uri);
       //post to local
       	var response = {};
 		var db = new mongoOp();
