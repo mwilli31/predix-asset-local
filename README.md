@@ -4,7 +4,6 @@ This is a simple REST API using Node.js and MongoDB
 There are a few setup scripts that are there to help get started.
 
 This project assumes that it is located on a linux OS in the filepath /predix
-
 ----------------------------------------------
 [If used as part of the Predix Kits, then these scripts are run and started as part of the provisoning, below is only useful if running without the provisioner]
 
@@ -155,6 +154,14 @@ the global Timeseries for the Kits. If it is a unique tag, then the microservice
 
 The server.js rest client interacts with the assetMicroservice.js file as a child process to query the asset-rest-service microservice in predix
 
+
+-------------------------------------------------------------
+
+ignore all other nodejs files except for:
+
+server.js
+
+assetMicroservice.js
 
 --------------------------------------------------------------
 If there are any questions or issues you can email edgoldwe@syr.edu  for clarification.
