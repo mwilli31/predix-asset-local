@@ -11,13 +11,14 @@ var cp		=   require('child_process');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({"extended" : false}));
 
+//most basic call
 router.get("/",function(req,res){
-    res.json({"error" : false,"message" : "Hello World Eli"});
+    res.json({"error" : false,"message" : "Hello World"});
 });
 
 
 router.route("/uri")
-    .get(function(req,res){
+    .get(function(req,res){ //gets all the assets in the local db
         var response = {};
         mongoOp.find({},function(err,data){
         // Mongo command to fetch all data from collection.
