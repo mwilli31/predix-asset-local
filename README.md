@@ -147,14 +147,22 @@ When calling post with a body that looks like this:
 
 (Note: this call will be made from flowthings or a seperate SEP, so the post call will be generated from the flowthings track )
 
-The post will first make sure that the edge-alias is unique to the Local DB,
-Then if it is, it will create a child process that is implemeted in childTestDEMO.js, and will post the simple sensor info to the Local DB.
-This child Process makes an API call to the asset-rest-service microservice in Predix.
-This API call first fetches more data about that specific type of sensor from an Asset Registry, then creates a new URI for the Sensor,
-by assigning it in this form "/tags/Grove_Sensor*UUID". To verify that the UUID is globally unique their is an automatic API POST to
-the global Timeseries for the Kits. If it is a unique tag, then the microservice will update the original post to the Local DB, with the new info and UUID tag.
+1)The post will first make sure that the edge-alias is unique to the Local DB using the edge-alias.
 
-The server.js rest client interacts with the assetMicroservice.js file as a child process to query the asset-rest-service microservice in predix
+2)If the new asset is unique, the simple asset infor is posted in the Local DB.
+
+3)Then if it is, it will create a child process(assetMicroservice.js).
+
+4)This child Process makes a POST REST call to the asset-rest-service microservice that is hosted in Predix.
+
+5)The microservice first fetches more data about that specific asset from an Asset Registry, then creates a new URI for the Sensor with a UUID,
+by assigning it in this form "/tags/Grove_Sensor*UUID". To verify that the UUID is globally unique, the new tag is checked against a global
+Timeseries. If it is a unique tag, the microservice will both return the updated asset as a response to the initial REST call and post it to a
+Global Asset registry.
+
+6)The child process on receiving the response from the microservice will update the original posted asset in the Local DB with the updated version
+
+[The server.js rest client interacts with the assetMicroservice.js file as a child process to query the asset-rest-service microservice in predix]
 
 
 -------------------------------------------------------------
