@@ -52,7 +52,7 @@ router.route("/uri")
 
 	 var responseExist = 0;
         //console.log(req.body);
-        mongoOp.findOne({"uri":req.body.uri},function(err,data){
+        mongoOp.findOne({"edge-alias":req.body["edge-alias"]},function(err,data){
         // This will run Mongo Query to fetch data based on ID.
             if(err) {
                 responseExist = -1;
@@ -76,24 +76,28 @@ router.route("/uri")
 	console.log("BEFORE " + req.body.kit);
 	 db.uri = req.body.uri;
 	db["edge-alias"] = req.body["edge-alias"];
-	db.kit = req.body.kit;
-	db.manufacturer = req.body.manufacturer;
-	db.oem = req.body.oem;
-	db.sensor = req.body.sensor;
+	db.kits = req.body.kits;
+	db.manufacturers = req.body.manufacturers;
+	db.oems = req.body.oems;
+	db.sensors = req.body.sensors;
 	db.category = req.body.category;
-	db.protocol = req.body.protocol;
+	db.protocols = req.body.protocols;
 	 db.model = req.body.model;
+        db.devices = req.body.devices;
 	console.log("email sent : " + req.body.uri + " was added "  + req.body.oem + " herer");
 //new//
 
-	 var child = cp.fork('/predix/predix-asset-local/childTest');
+	 var child = cp.fork('/predix/predix-asset-local/childTestDEMO');
                 console.log("child");
             child.on('message',function(m){
                 console.log("got "+ m);
         });
         console.log("SEND");
-        child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io" + db.uri);
-	//console.log("[DEBUG] = " +  db["edge-alias"].substr(0,db["edge-alias"].indexOf('-')));
+//        child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/demo" + db.uri,db.devices);
+child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/demo" + req.body.uri +"^"+ req.body.devices+"&"+req.body.kits);
+	
+
+//console.log("[DEBUG] = " +  db["edge-alias"].substr(0,db["edge-alias"].indexOf('-')));
 	//child.send("https://asset-rest-service.run.aws-usw02-pr.ice.predix.io/tags/"+db["edge-alias"].substr(0,db["edge-alias"].indexOf('-'))+"-1/alias");
 
 // var outString = "";
@@ -196,13 +200,15 @@ router.route("/uri/:id")
     })
 
 
-
+//modified to work with edgealias
 router.route("/uriTest")
     .get(function(req,res){
         var response = {};
 	console.log(req.query);
-        mongoOp.findOne({"uri":req.query.uri},function(err,data){
-        // This will run Mongo Query to fetch data based on ID.
+       // mongoOp.findOne({"uri":req.query.uri},function(err,data){
+        mongoOp.findOne({"edge-alias":req.query.uri},function(err,data){
+
+	// This will run Mongo Query to fetch data based on ID.
             if(err) {
                 response = {"error" : true,"message" : "Error fetching data"};
             } else {
@@ -217,7 +223,7 @@ router.route("/uriTest")
     })
 
 
-///
+///added delete by uri
 router.route("/uriTest1")
     .get(function(req,res){
         var response = {};
