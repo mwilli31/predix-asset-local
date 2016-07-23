@@ -1,6 +1,6 @@
 This is a simple REST API using Node.js and MongoDB
 
-Naviagate to /setupScripts and run 
+Naviagate to /setupScripts and run
 
 	./setup.sh
  or
@@ -40,7 +40,7 @@ Here are the supported calls:
 
 POST localhost:3000/uri
 	header = Content-Type == application/json
-	then include the json object in the body. 
+	then include the json object in the body.
 
 GET localhost:3000/uri
 	will return all assets in the DB
@@ -62,7 +62,7 @@ Note: since this DB is meant to be run on an edge device, if the REST calls are 
 will not work, instead use the ip address of the edge device. (For example GET 10.10.10.148:/300/uri)
 
 If when you run the mongod command above, and the response exits by an unclean shutdown run this command to see the mongod process:
-	
+
 	ps ax | grep mongod
 
 you might see a line that looks like this:
@@ -70,11 +70,32 @@ you might see a line that looks like this:
 	437 ttyMFD2 S+   0:00 grep mongod
 
 kill this preocess by typing:
-	
+
 	kill -9 0000
 
 where 0000 is the process id.
+--------------------------------------------------------------
+NEW:
+when calling the POST localhost:3000/uri API call, there is additional functionality that this call does. (FT will post in this format)
+When calling post with a body that looks like this:
 
+	{
+		"uri" : "/sensors/Grove_Sensor_1_1-1",
+		"devices" : "/devices/FTdeviceID",
+		"kits": "/kits/kitType",
+		"edge-alias" : "Grove_Sensor_1_1-1"
+	}
 
+(Note: this call will be made from flowthings, so the post call will be generated from the flowthings track )
+
+The post will first make sure that the edge-alias is unique to the Local DB,
+Then if it is, it will create a child process that is implemeted in childTestDEMO.js, and will post the simple sensor info to the Local DB.
+This child Process makes an API call to the asset-rest-service microservice in Predix.
+This API call first fetches more data about that specific type of sensor from an Asset Registry, then creates a new URI for the Sensor,
+by assigning it in this form "/tags/Grove_Sensor*UUID". To verify that the UUID is globally unique their is an automatic API POST to
+the global Timeseries for the Kits. If it is a unique tag, then the microservice will update the original post to the Local DB, with the new info and UUID tag.
+
+Still to be implemented is, at the same time, the same tag will be posted to a global asset registry so data from timeseries can be visualized later
+
+--------------------------------------------------------------
 If there are any questions or issues you can email eli.goldweber@ge.com for clarification.
-
