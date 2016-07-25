@@ -5,7 +5,15 @@ var mongoSchema =   mongoose.Schema;
 // create schema
 var userSchema  = {
     "uri" : String,
-    "model" : String
+    "edge-alias" : String,
+    "kits" : String,
+    "manufacturers" : String,
+    "oems" : String,
+    "sensors" : String,
+    "category" : String,
+    "protocols" : String,
+    "model" : String,
+    "devices" : String
 };
 // create model if not exists.
 module.exports = mongoose.model('asseturis',userSchema);
