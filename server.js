@@ -87,7 +87,7 @@ router.route("/uri")
 	console.log("email sent : " + req.body.uri + " was added "  + req.body.oem + " herer");
 //new//
 
-	 var child = cp.fork('/predix/predix-asset-local/childTestDEMO');
+	 var child = cp.fork('/predix/predix-asset-local/assetMicroservice');
                 console.log("child");
             child.on('message',function(m){
                 console.log("got "+ m);
