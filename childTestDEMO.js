@@ -19,7 +19,7 @@ var partTwo = partTwoTemp.substr(0,partTwoTemp.indexOf('&'));
 var partThree = partTwoTemp.substr(partTwoTemp.indexOf('&')+1);
 console.log("child was started " + partOne + " try: " + partTwo  + " hopw : " + partThree)
 var nameLength = partOne.length;
-var n = partOne.substring(nameLength-2); 
+var n = partOne.substring(0,partOne.indexOf('-')); 
 //m =  m.substring(0,nameLength-2);
  var options = {
  method: 'POST',
@@ -46,8 +46,8 @@ console.log("HERE child_process: " + m);
 		var db = new mongoOp();
         // first find out record exists or not
         // if it does then update the record
-	console.log("foo " + body[0].sensors +n);
-        mongoOp.findOne({"uri":body[0].sensors+n},function(err,data){
+	console.log("foo " + "/sensors/" + partOne.substr(partOne.indexOf('G')));
+        mongoOp.findOne({"uri": "/sensors/" + partOne.substr(partOne.indexOf('G'))},function(err,data){
             if(err) {
                 response = {"error" : true,"message" : "Error fetching data"};
             } else {
