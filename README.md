@@ -48,6 +48,9 @@ GET localhost:3000/uri
 DELETE localhost:3000/uri/:id
 	deletes the asset with the specified uri
 
+DELETE localhost:3000/uriTest1?uri=:uri
+	where uri is the the uri of the asset that you wish to delete from the DB
+
 GET localhost:3000/uri/:id
 	gets the asset with the specified mongo id
 
