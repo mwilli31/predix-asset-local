@@ -46,7 +46,7 @@ console.log("HERE child_process: " + m);
 		var db = new mongoOp();
         // first find out record exists or not
         // if it does then update the record
-	console.log("foo " + "/sensors/" + partOne.substr(partOne.indexOf('G')));
+	//console.log("foo " + "/sensors/" + partOne.substr(partOne.indexOf('G')));
         mongoOp.findOne({"uri": "/sensors/" + partOne.substr(partOne.indexOf('G'))},function(err,data){
             if(err) {
                 response = {"error" : true,"message" : "Error fetching data"};
